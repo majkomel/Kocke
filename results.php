@@ -1,36 +1,40 @@
 <?php
 session_start();
 
-// Preverimo, če obstajajo rezultati iz game.php, drugače preusmerimo nazaj
+// Preverimo, če obstajajo rezultati, drugače nazaj na začetek
 if (!isset($_SESSION['zadnji_rezultati'])) {
-    header("Location: index.html"); // Popravi, če se tvoja prva stran imenuje index.php
+    header("Location: index.php");
     exit;
 }
 
-$igralci = [
-    $_SESSION['ime1'] ?? 'Igralec 1',
-    $_SESSION['ime2'] ?? 'Igralec 2',
-    $_SESSION['ime3'] ?? 'Igralec 3'
-];
+// Imena igralcev pripravimo v preprosto polje (brez ?? operatorja)
+$igralci = array();
+if (isset($_SESSION['ime1'])) { $igralci[0] = $_SESSION['ime1']; } else { $igralci[0] = 'Igralec 1'; }
+if (isset($_SESSION['ime2'])) { $igralci[1] = $_SESSION['ime2']; } else { $igralci[1] = 'Igralec 2'; }
+if (isset($_SESSION['ime3'])) { $igralci[2] = $_SESSION['ime3']; } else { $igralci[2] = 'Igralec 3'; }
 
 $rezultati = $_SESSION['zadnji_rezultati'];
-$skupne_tocke = [];
+$skupne_tocke = array();
 
-// Izračunamo skupne točke za vsakega igralca
-foreach ($rezultati as $index => $meti) {
-    $skupne_tocke[$index] = array_sum($meti);
+// Izračunamo skupne točke s klasično for zanko
+for ($i = 0; $i < count($igralci); $i++) {
+    // array_sum je v redu, ker je osnovna funkcija, ki se jo učite
+    $skupne_tocke[$i] = array_sum($rezultati[$i]);
 }
 
 // Najdemo najvišje število točk
 $max_tocke = max($skupne_tocke);
-$zmagovalci = [];
+$zmagovalci_imena = array();
 
-// Preverimo, kateri igralci imajo to najvišje število točk (v primeru izenačenja)
-foreach ($skupne_tocke as $index => $tocke) {
-    if ($tocke == $max_tocke) {
-        $zmagovalci[] = $igralci[$index];
+// Poiščemo zmagovalce
+for ($j = 0; $j < count($skupne_tocke); $j++) {
+    if ($skupne_tocke[$j] == $max_tocke) {
+        $zmagovalci_imena[] = $igralci[$j];
     }
 }
+
+// Združimo zmagovalce v niz za izpis
+$izpis_zmagovalcev = implode(", ", $zmagovalci_imena);
 ?>
 
 <!DOCTYPE html>
@@ -41,8 +45,8 @@ foreach ($skupne_tocke as $index => $tocke) {
     <title>Kocke - Rezultati</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/resultsCSS.css">
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -52,34 +56,79 @@ foreach ($skupne_tocke as $index => $tocke) {
         <div class="results-box">
             
             <h2 class="winner-title" onclick="credits()">
-                🏆 Zmagovalec: <?= implode(", ", $zmagovalci) ?> 🏆
+                🏆 Zmagovalec: <?php echo $izpis_zmagovalcev; ?> 🏆
             </h2>
 
             <ul class="score-list">
-                <?php foreach ($igralci as $index => $igralec): ?>
-                    <?php $is_winner = ($skupne_tocke[$index] == $max_tocke) ? 'winner' : ''; ?>
-                    <li class="score-item <?= $is_winner ?>">
-                        <span><?= htmlspecialchars($igralec) ?></span>
-                        <span class="points"><?= $skupne_tocke[$index] ?> pik</span>
+                <?php 
+                // Klasična for zanka za izpis v HTML
+                for ($k = 0; $k < count($igralci); $k++) {
+                    $is_winner = "";
+                    if ($skupne_tocke[$k] == $max_tocke) {
+                        $is_winner = "winner";
+                    }
+                    ?>
+                    <li class="score-item <?php echo $is_winner; ?>">
+                        <span><?php echo htmlspecialchars($igralci[$k]); ?></span>
+                        <span class="points"><?php echo $skupne_tocke[$k]; ?> pik</span>
                     </li>
-                <?php endforeach; ?>
+                <?php } ?>
             </ul>
 
-            <!-- Spremeni href v ime tvoje prve strani (npr. index.html ali index.php) -->
             <a href="index.php" class="play-button" style="text-decoration: none; display: inline-block;">Igraj znova</a>
         </div>
     </div>
-	<script>
-		function credits(){
-		Swal.fire({
-		  icon: "question",
-		  title: "Credits:",
-		  text: "Maj Komel, 4.RA",
-		  
-		  confirmButtonText: "OK",
-		  confirmButtonColor: "#4a148c"
-		});
-	}
+
+    <script>
+    // 1. Funkcija za izstrelitev konfetov
+    function shoot() {
+			// Prvi del konfetov (zvezdice)
+			confetti({
+				spread: 500,
+				ticks: 30,
+				gravity: 0,
+				decay: 0.94,
+				startVelocity: 30,
+				colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+				particleCount: 40,
+				scalar: 1.2,
+				shapes: ["star"]
+			});
+
+			// Drugi del konfetov (krogci)
+			confetti({
+				spread: 500,
+				ticks: 30,
+				gravity: 0,
+				decay: 0.94,
+				startVelocity: 30,
+				colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+				particleCount: 10,
+				scalar: 0.75,
+				shapes: ["circle"]
+			});
+		}
+
+		// 2. Funkcija za tvoj SweetAlert (Credits)
+		function credits() {
+			Swal.fire({
+				icon: "question",
+				title: "Credits:",
+				text: "Maj Komel, 4.RA",
+				confirmButtonText: "OK",
+				confirmButtonColor: "#4a148c"
+			});
+		}
+
+		// 3. Spodnja koda se zažene takoj, ko se stran naloži
+		window.onload = function() {
+			// Takojšnja prva eksplozija
+			shoot();
+			
+			// Še dve zaporedni eksploziji z majhnim zamikom za boljši efekt
+			setTimeout(shoot, 150);
+			setTimeout(shoot, 300);
+		};
 	</script>
 </body>
 </html>

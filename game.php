@@ -118,7 +118,7 @@ $_SESSION['zadnji_rezultati'] = $vsi_meti_plosko;
 
                     // 5. Če so še runde, počakamo pol sekunde (500ms) in pokličemo isto funkcijo še enkrat
                     if (currentGame < numGames) {
-                        setTimeout(zazeniIgro, 500);
+                        setTimeout(zazeniIgro, 750);
                     } else {
                         // Vse je končano
                         zakljuciVse();
