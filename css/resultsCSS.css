@@ -1,0 +1,45 @@
+
+        .results-box {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #000000;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .winner-title {
+            color: #ffd700; /* Zlata barva za zmagovalca */
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .score-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 40px 0;
+        }
+
+        .score-item {
+            font-size: 1.5rem;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .score-item.winner {
+            border: 2px solid #ffd700;
+            background: rgba(255, 215, 0, 0.1);
+            font-weight: bold;
+        }
+
+        .points {
+            color: #ffd700;
+        }

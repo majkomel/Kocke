@@ -1,4 +1,147 @@
-body{
-	background: #411985;
-	background: radial-gradient(circle,rgba(65, 25, 133, 1) 0%, rgba(14, 25, 97, 1) 49%);
+@font-face {
+    font-family: 'Azeret Mono';
+    src: url('../Azeret_mono/AzeretMono-VariableFont_wght.ttf') format('truetype-variations'),
+         url('../Azeret_mono/AzeretMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900; /* Pove brskalniku, da pisava podpira razpon debelin */
+    font-style: normal;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at center, #4a148c 0%, #000000 100%);
+    
+    /* 2. Uporabi novo ime pisave */
+    font-family: 'Azeret Mono', monospace; 
+    color: white;
+}
+
+/* Naslov */
+.main-title {
+    font-size: 4rem;
+    letter-spacing: 5px;
+    margin-bottom: 40px;
+    color: #ffffff;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+/* Glavni vsebnik */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    max-width: 900px;
+}
+
+/* Vrstica z uporabniki */
+.users-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+/* Posamezen okvir za uporabnika */
+.user-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #000000;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+	border-radius: 12px;
+
+   
+}
+
+.user-box h2 {
+    color: #ffffff;
+    margin-top: 0;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+
+/* Skupina za vnos imena */
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.input-group label {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 60%;
+    padding: 6px;
+    border-radius: 12px;
+    font-weight: bold;
+}
+
+/* Spodnji okvir z nastavitvami */
+.settings-box {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #000000;
+    border-radius: 12px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.dropdowns-row {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    width: 100%;
+}
+
+/* Skupina za spustne sezname */
+.select-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.select-group label {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.select-group select {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+}
+
+.play-button {
+    background-color: white;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 800; /* Variabilna pisava bo tukaj uporabila debelo različico */
+    padding: 8px 40px;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: 'Azeret Mono', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.play-button:hover {
+    background-color: #4a148c; /* Popravil sem hover, da se dejansko kaj spremeni */
+    color: white;
 }

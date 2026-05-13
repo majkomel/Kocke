@@ -1,0 +1,33 @@
+
+        .dice-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap; 
+        }
+
+        .die {
+            width: 70px;
+            height: 70px;
+            background: white;
+            color: #4a148c;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.8rem;
+            font-weight: 900;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s, color 0.3s;
+        }
+
+        .rolling {
+            animation: shake 0.15s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(2px, 1px) rotate(0deg); }
+            50% { transform: translate(-2px, -1px) rotate(-5deg); }
+            100% { transform: translate(2px, -1px) rotate(5deg); }
+        }
