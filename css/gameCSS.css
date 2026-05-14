@@ -1,33 +1,27 @@
+/* Stil za gumb (če ga nimaš že v style.css) */
+.play-button {
+    background-color: white;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 12px 40px;
+    border: 1px solid #000000;
+    border-radius: 30px;
+    cursor: pointer;
+    font-family: 'Azeret Mono', monospace;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
 
-        .dice-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap; 
-        }
+.play-button:hover {
+    background-color: #4a148c;
+    color: white;
+    transform: scale(1.05);
+}
 
-        .die {
-            width: 70px;
-            height: 70px;
-            background: white;
-            color: #4a148c;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.8rem;
-            font-weight: 900;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s, color 0.3s;
-        }
-
-        .rolling {
-            animation: shake 0.15s infinite;
-        }
-
-        @keyframes shake {
-            0% { transform: translate(2px, 1px) rotate(0deg); }
-            50% { transform: translate(-2px, -1px) rotate(-5deg); }
-            100% { transform: translate(2px, -1px) rotate(5deg); }
-        }
+/* Animacija, da gumb "diha" */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
